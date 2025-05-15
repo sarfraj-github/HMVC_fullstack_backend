@@ -1,0 +1,36 @@
+{
+  "name": "hmvc-backend-fullstack",
+  "version": "1.0.0",
+  "description": "HMVC hands on practice",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarfraj-github/HMVC_fullstack_backend.git"
+  },
+  "keywords": [
+    "HMVC",
+    "Express",
+    "pg",
+    "ibirds"
+  ],
+  "author": "Mohd Sarfraz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarfraj-github/HMVC_fullstack_backend/issues"
+  },
+  "homepage": "https://github.com/sarfraj-github/HMVC_fullstack_backend#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
