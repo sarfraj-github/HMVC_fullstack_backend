@@ -1,3 +1,10 @@
+/**
+ * @file auth.contoller.js
+ * @description Handles all authentication endpoint requests.
+ * @author  Modmmad Sarfraj
+ * @date    14-may-2025
+ */
+
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const authModel = require('./auth.model');
@@ -54,7 +61,26 @@ const loginUser = async (req , res) => {
     }
 }
 
+const handleUpdatePassword = async (req , res) => {
+    try {
+        const { password , id } = req.body;
+        const salt  = bcrypt.genSaltSync(10);
+        const result = await authModel.updatePassword(bcrypt.hashSync(password , salt), id);
+
+        if (!result) {
+            return response.badRequest(res , 'Password update failed');
+        }
+
+        return response.success(res , 'Password updated successfully' , result);
+
+    } catch (error) {
+        console.log('Server-error-password :->' , error);
+        response.serverError(res);
+    }
+}
+
 module.exports = {
     userRegister,
-    loginUser
+    loginUser,
+    handleUpdatePassword,
 }
