@@ -19,7 +19,7 @@ const authenticateUser = async (request, response, next) => {
         // request.user = decodedToken.user;
         request.user = decodedToken;
 
-        const { rows } = await db.query('SELECT id FROM public.users WHERE id = $1', [decodedToken.id]);
+        const { rows } = await db.query('SELECT id FROM public.user WHERE id = $1', [decodedToken.id]);
 
         if (rows.length === 0) {
             return ResponseManager.unauthorized(response, 'User account not found');

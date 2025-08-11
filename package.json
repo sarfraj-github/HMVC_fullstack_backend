@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "HMVC hands on practice",
   "main": "start.js",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon start.js"
@@ -25,6 +26,7 @@
   "homepage": "https://github.com/sarfraj-github/HMVC_fullstack_backend#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",

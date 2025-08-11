@@ -13,6 +13,7 @@ const authenticateUser = require("../middlewares/index");
 
 router.post('/signup' , authController.userRegister);
 router.post('/login', authController.loginUser);
-router.put('/passowrd', authenticateUser , authController.handleUpdatePassword);
+router.post('/logout', authController.logout);
+router.post('/passowrd', authenticateUser , authController.handleUpdatePassword);
 
 module.exports = router;

@@ -47,6 +47,10 @@ const ResponseManager = {
 
   serviceUnavailable: (res, message = 'Service temporarily unavailable') => {
     return sendResponse(res, 503, message);
+  },
+
+  duplicate : (res, message = "Duplicate record") => {
+    return sendResponse(res, 409, message);
   }
 }
 
