@@ -9,11 +9,11 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("./auth.controller");
-const authenticateUser = require("../middlewares/index");
+const MiddleWere = require("../middlewares/index");
 
 router.post('/signup' , authController.userRegister);
 router.post('/login', authController.loginUser);
 router.post('/logout', authController.logout);
-router.post('/passowrd', authenticateUser , authController.handleUpdatePassword);
+router.post('/passowrd', MiddleWere.authenticateUser , authController.handleUpdatePassword);
 
 module.exports = router;
