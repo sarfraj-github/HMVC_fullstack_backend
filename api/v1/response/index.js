@@ -1,4 +1,8 @@
 const sendResponse = (res, statusCode, message, data = null, error = null, errorCode = null) => {
+  if (statusCode === 204) {
+    return res.status(204).end();
+  }
+
   const response = {
     success: statusCode >= 200 && statusCode < 300,
     message,
@@ -49,21 +53,13 @@ const ResponseManager = {
     return sendResponse(res, 503, message);
   },
 
-  duplicate : (res, message = "Duplicate record") => {
+  duplicate: (res, message = "Duplicate record") => {
     return sendResponse(res, 409, message);
-  }
+  },
+
+  noContent: (res) => {
+    return sendResponse(res, 204)
+  },
 }
 
 module.exports = ResponseManager
-
-// exports.success = (res, data, status = 200) => {
-//   res.status(status).json({ success: true, data });
-// };
-
-// exports.error = (res, message, status = 500) => {
-//   res.status(status).json({ success: false, message });
-// };
-
-// exports.create = (res , message, data) => {
-//   res.status(201).json({success: true , message , data});
-// };
