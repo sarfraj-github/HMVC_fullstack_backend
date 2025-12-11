@@ -15,7 +15,7 @@ const authenticateUser = async (request, response, next) => {
     try {
         const decodedToken = jwt.verify(token, jwtConfig.jwt.JWT_SECRET);
         // console.log('decodedToken-->>' , decodedToken);
-        
+
         // request.user = decodedToken.user;
         request.user = decodedToken;
 
@@ -83,4 +83,4 @@ const checkModulePermission = (moduleName, action) => {
     };
 };
 
-module.exports = {authenticateUser, checkModulePermission};
+module.exports = { authenticateUser, checkModulePermission };

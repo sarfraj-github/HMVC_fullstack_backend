@@ -13,7 +13,7 @@ const jwtConfig = require("../../../config/db.config");
 
 const userRegister = async (req, res) => {
     try {
-        
+
         const isExsitingUser = await authModel.findByEmail(req?.body?.email);
         if (isExsitingUser) {
             return response.duplicate(res, 'Email already registered', 400);
@@ -25,8 +25,8 @@ const userRegister = async (req, res) => {
         const newUser = await authModel.registerNewUser(req.body);
         // console.log('database response after rgister new user :-> ', newUser);
 
-        if (newUser) { 
-            response.created(res, 'Record created successfully.' , newUser);
+        if (newUser) {
+            response.created(res, 'Record created successfully.', newUser);
         }
 
     } catch (error) {
@@ -35,11 +35,11 @@ const userRegister = async (req, res) => {
     }
 }
 
-const loginUser = async (req , res) => {
+const loginUser = async (req, res) => {
     try {
         const userRecord = await authModel.findByEmail(req.body?.username);
         // console.log('userRecord-by-username :->' , userRecord);
-        
+
         if (!userRecord) {
             return response.unauthorized(res);
         }
@@ -52,17 +52,17 @@ const loginUser = async (req , res) => {
         delete userRecord?.password;
 
         const authToken = jwt.sign(userRecord, jwtConfig.jwt.JWT_SECRET, { expiresIn: jwtConfig.jwt.JWT_EXPIRE_IN });
-        return response.success(res , null , {authToken});
+        return response.success(res, null, { authToken });
 
     } catch (error) {
-        console.log('login-server-error :->' , error);
+        console.log('login-server-error :->', error);
         return response.serverError(res);
     }
 }
 
-const logout = async (req , res) => {
+const logout = async (req, res) => {
     try {
-        
+
     } catch (error) {
         return Response.serverError(res);
     }
@@ -71,21 +71,21 @@ const logout = async (req , res) => {
 /**
  * @description : This Controller used for loged-in user for update password.
  */
-const handleUpdatePassword = async (req , res) => {
+const handleUpdatePassword = async (req, res) => {
     try {
-        const { password , id } = req.body;
-        const salt  = bcrypt.genSaltSync(10);
-        const result = await authModel.updatePassword(bcrypt.hashSync(password , salt), id);
+        const { password, id } = req.body;
+        const salt = bcrypt.genSaltSync(10);
+        const result = await authModel.updatePassword(bcrypt.hashSync(password, salt), id);
 
         delete result[0]?.password;
         if (!result) {
-            return response.badRequest(res , 'Password update failed');
+            return response.badRequest(res, 'Password update failed');
         }
 
-        return response.success(res , 'Password updated successfully' , result);
+        return response.success(res, 'Password updated successfully', result);
 
     } catch (error) {
-        console.log('Server-error-password :->' , error);
+        console.log('Server-error-password :->', error);
         response.serverError(res);
     }
 }
@@ -93,9 +93,9 @@ const handleUpdatePassword = async (req , res) => {
 /**
  * @description : This mehthod sent a reset password link to use on thier email-id
  */
-const forgote_password  = async (req, res) => {
+const forgote_password = async (req, res) => {
     try {
-        
+
     } catch (error) {
         return Response.serverError(res);
     }
