@@ -10,13 +10,14 @@ var jwt = require('jsonwebtoken');
 const authModel = require('./auth.model');
 const response = require('../response/index');
 const jwtConfig = require("../../../config/db.config");
+const { RESPONSE_MESSAGE } = require("../../../utils/constant");
 
 const userRegister = async (req, res) => {
     try {
 
         const isExsitingUser = await authModel.findByEmail(req?.body?.email);
         if (isExsitingUser) {
-            return response.duplicate(res, 'Email already registered', 400);
+            return response.duplicate(res, RESPONSE_MESSAGE.EMAIL_ALREADY_EXISTS, 400);
         }
 
         const salt = bcrypt.genSaltSync(10);
@@ -26,7 +27,7 @@ const userRegister = async (req, res) => {
         // console.log('database response after rgister new user :-> ', newUser);
 
         if (newUser) {
-            response.created(res, 'Record created successfully.', newUser);
+            response.created(res, RESPONSE_MESSAGE.CREATE, newUser);
         }
 
     } catch (error) {
@@ -38,8 +39,6 @@ const userRegister = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const userRecord = await authModel.findByEmail(req.body?.username);
-        // console.log('userRecord-by-username :->' , userRecord);
-
         if (!userRecord) {
             return response.unauthorized(res);
         }
@@ -50,9 +49,8 @@ const loginUser = async (req, res) => {
         }
 
         delete userRecord?.password;
-
         const authToken = jwt.sign(userRecord, jwtConfig.jwt.JWT_SECRET, { expiresIn: jwtConfig.jwt.JWT_EXPIRE_IN });
-        return response.success(res, null, { authToken });
+        return response.success(res, RESPONSE_MESSAGE.LOGIN_SUCCESS, { authToken });
 
     } catch (error) {
         console.log('login-server-error :->', error);
@@ -91,6 +89,17 @@ const handleUpdatePassword = async (req, res) => {
 }
 
 /**
+ * @Description : Verify user with User-name and Password
+ */
+const handleVarifyUser = async (req) => {
+    try {
+
+    } catch (error) {
+        return Response.serverError(res);
+    }
+}
+
+/**
  * @description : This mehthod sent a reset password link to use on thier email-id
  */
 const forgote_password = async (req, res) => {
@@ -106,4 +115,6 @@ module.exports = {
     loginUser,
     logout,
     handleUpdatePassword,
+    forgote_password,
+    handleVarifyUser
 }

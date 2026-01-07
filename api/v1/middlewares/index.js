@@ -14,7 +14,7 @@ const authenticateUser = async (request, response, next) => {
 
     try {
         const decodedToken = jwt.verify(token, jwtConfig.jwt.JWT_SECRET);
-        // console.log('decodedToken-->>' , decodedToken);
+        // console.log('decodedToken-->>', decodedToken);
 
         // request.user = decodedToken.user;
         request.user = decodedToken;
@@ -38,7 +38,7 @@ const authenticateUser = async (request, response, next) => {
 };
 
 /**
- * @description : This method check a API's particuler route Permission.
+ * @description : This method check a API's particuler route(GET, POST, PUT, DELETE) Permission.
  */
 const checkModulePermission = (moduleName, action) => {
 
@@ -63,13 +63,17 @@ const checkModulePermission = (moduleName, action) => {
             }
 
             const modulePerm = rows?.find(p => p.module === moduleName);
-
             if (!modulePerm) {
                 return res.status(403).json({ message: `No access to module: ${moduleName}` });
             }
 
             if (typeof modulePerm[action] !== 'boolean') {
                 return res.status(403).json({ message: `Invalid or missing permission flag: ${action}` });
+            }
+
+            // Loged-in user must be has this Permission('tab_view'), if any other permissions they have.
+            if (!modulePerm['tab_view']) {
+                return res.status(403).json({ message: `You don't have permission to access the ${moduleName} module.` });
             }
 
             if (!modulePerm[action]) {
