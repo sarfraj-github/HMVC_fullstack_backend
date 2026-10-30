@@ -38,7 +38,7 @@ const userRegister = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        const userRecord = await authModel.findByEmail(req.body?.username);
+        const userRecord = await authModel.findByEmail(req.body?.email);
         if (!userRecord) {
             return response.unauthorized(res);
         }
