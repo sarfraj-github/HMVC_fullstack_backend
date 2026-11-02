@@ -35,7 +35,25 @@ const registerNewUser = async (body) => {
 
 const findByEmail = async (email) => {
   try {
-    const query = `SELECT * FROM public.user WHERE email = $1;`;
+    const query = `SELECT
+                    u.id,
+                    CONCAT(u.first_name,'',u.last_name) AS full_name,
+                    u.first_name,
+                    u.last_name,
+                    u.gender,
+                    u.email,
+                    u.status,
+                    u.password,
+                    u.manager_id,
+                    u.group_id,
+                    g.name AS group_name,
+                    u.company_id,
+                    c.name AS company_name,
+                    c.tenentcode
+                  FROM public.user u
+                  LEFT JOIN public.group g ON g.id = u.group_id
+                  LEFT JOIN public.company c ON c.id = u.company_id
+                  WHERE u.email = $1;`;
     const { rows } = await db.query(query, [email]);
     return rows[0];
 

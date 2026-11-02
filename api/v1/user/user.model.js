@@ -6,7 +6,7 @@ const initSchema = async (schemaName) => {
     this.schema = schemaName
 }
 
-const fields = ['first_name', 'last_name', 'phone', 'mobile', 'isactive', 'email', 'password', 'gender', 'street', 'city', 'state', 'country', 'zip_code', 'department', 'maanger_id', 'company_id', 'group_id', 'description', 'createdbyid', 'lastmodifiedbyid'];
+const fields = ['first_name', 'last_name', 'phone', 'mobile', 'status', 'email', 'password', 'gender', 'street', 'city', 'state', 'country', 'zip_code', 'department', 'manager_id', 'company_id', 'group_id', 'description', 'createdbyid', 'lastmodifiedbyid'];
 
 const fetchAllUsersOrById = async (id) => {
     try {
@@ -39,7 +39,7 @@ const handleCreateNewUser = async (payload, user_id) => {
 
 const handleUpdateUserById = async (payload, user_id, record_id) => {
     try {
-        payload = {...payload, lastmodifiedbyid : user_id};
+        payload = { ...payload, lastmodifiedbyid: user_id };
         const validFields = fields?.filter(field => field in payload);
         const setParts = validFields?.map((key, idx) => `${key} = $${idx + 1}`) || [];
         setParts.push(`lastmodifieddate = NOW()`);
@@ -58,7 +58,7 @@ const handleUpdateUserById = async (payload, user_id, record_id) => {
 
 const handleDeleteUserById = async (id) => {
     try {
-        return {rows} = await db.query(`DELETE FROM ${this.schema}.user WHERE id = $1 RETURNING *;`, [id]);
+        return { rows } = await db.query(`DELETE FROM ${this.schema}.user WHERE id = $1 RETURNING *;`, [id]);
     } catch (error) {
         throw error;
     }

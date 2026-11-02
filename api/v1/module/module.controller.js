@@ -1,6 +1,6 @@
 const MODEL = require("./module.model");
 const RESPONSE = require("../response");
-const { RESPONSE_MESSAGE } = require("../../../utils/contant");
+const { RESPONSE_MESSAGE } = require("../../../utils/constant");
 
 const handleListOfModules = async (req, res) => {
     try {
