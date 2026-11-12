@@ -1,0 +1,37 @@
+name: Backend - CI Pipeline
+
+# Trigger workflow whenever code is pushed to main
+on:
+  push:
+    branches:
+      - main
+
+# Define workflow jobs
+jobs:
+  backend-ci:
+    name: Backend CI
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1.  Get repository source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2. Configure Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Step 3. Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Verify Node.js Application
+      - name: Check Node.js version
+        run: node -v
+
+      # Step 4. Verify npm version
+      - name: Check npm version
+        run: npm -v
