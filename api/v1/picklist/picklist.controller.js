@@ -7,7 +7,7 @@
 
 const MODEL = require("./picklist.model");
 const RESPONSE = require('../response/index');
-const { RESPONSE_MESSAGE } = require("../../../utils/contant");
+const { RESPONSE_MESSAGE } = require("../../../utils/constant");
 
 const handlePickListsByModuleAndName = async (req, res) => {
     try {
