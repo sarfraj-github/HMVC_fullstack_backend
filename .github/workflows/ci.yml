@@ -28,10 +28,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Verify Node.js Application
+      # Step 4: Validate backend JavaScript syntax
+      - name: Check JavaScript syntax
+        run: node --check start.js
+
+      # Step 5. Verify Node.js Application
       - name: Check Node.js version
         run: node -v
 
-      # Step 4. Verify npm version
+      # Step 6. Verify npm version
       - name: Check npm version
         run: npm -v
