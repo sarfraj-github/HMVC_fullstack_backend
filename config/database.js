@@ -9,8 +9,12 @@ const pool = new Pool({
     port: config.dbConfig.DB_PORT
 });
 
-pool.connect()
-    .then(() => console.log('Database connected succeefully!'))
-    .catch((error) => console.log('db-connect-error :-> ', error))
+// pool.connect()
+//     .then(() => console.log('Database connected succeefully!'))
+//     .catch((error) => console.log('db-connect-error :-> ', error))
+
+// pool.query('SELECT 1')
+//     .then(() => console.log('Database connected successfully!'))
+//     .catch((error) => console.log('db-connect-error :-> ', error));
 
 module.exports = pool;
