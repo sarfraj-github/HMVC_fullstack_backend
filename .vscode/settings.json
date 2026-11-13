@@ -29,5 +29,8 @@
     "statusBar.debuggingForeground": "#e7e7e7",
     "statusBar.inactiveBackground": "#215732"
   },
-  "peacock.color": "#215732"
+  "peacock.color": "#215732",
+  "cSpell.words": [
+    "wrongpassword"
+  ]
 }

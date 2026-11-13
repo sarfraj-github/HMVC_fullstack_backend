@@ -4,6 +4,11 @@
   "description": "HMVC hands on practice",
   "main": "start.js",
   "type": "commonjs",
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/tests/setup/loadEnv.js"
+    ]
+  },
   "scripts": {
     "test": "jest --runInBand",
     "start": "nodemon start.js"

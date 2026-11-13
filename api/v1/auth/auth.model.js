@@ -2,7 +2,7 @@ const db = require("../../../config/database");
 
 const registerNewUser = async (body) => {
   try {
-    let query = `INSERT INTO public.user(first_name, last_name, phone, mobile, isactive, email, password, gender, street, city, state, country, zip_code, department, description, company_id, group_id)
+    let query = `INSERT INTO public.user(first_name, last_name, phone, mobile, status, email, password, gender, street, city, state, country, zip_code, department, description, company_id, group_id)
     VALUES($1 , $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING *`;
 
     const values = [
@@ -10,7 +10,7 @@ const registerNewUser = async (body) => {
       body?.last_name,
       body?.phone,
       body?.mobile,
-      body?.isactive,
+      body?.status,
       body?.email,
       body?.hashPassword,
       body?.gender,

@@ -1,3 +1,12 @@
+
+if (process.env.NODE_ENV === 'test') {
+  console.log('Jest database:', process.env.DB_NAME);
+}
+
+if (process.env.NODE_ENV === 'test' && process.env.DB_NAME !== 'My-Module-Permission-Test') {
+  throw new Error('Unsafe database configuration for testing!');
+}
+
 module.exports = {
   dbConfig: {
     HOST: process.env.HOST,
@@ -8,6 +17,6 @@ module.exports = {
   },
   jwt: {
     JWT_SECRET: "AJ$^&M$ER@101", // used for sign JWT tokens
-    JWT_EXPIRE_IN: "5h", // tkoen validity period
+    JWT_EXPIRE_IN: "5h", // token validity period
   },
 };

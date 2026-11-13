@@ -14,6 +14,6 @@ const MiddleWere = require("../middlewares/index");
 router.post('/signup', authController.userRegister);
 router.post('/login', authController.loginUser);
 router.post('/logout', authController.logout);
-router.post('/passowrd', MiddleWere.authenticateUser, authController.handleUpdatePassword);
+router.post('/password', MiddleWere.authenticateUser, authController.handleUpdatePassword);
 
 module.exports = router;

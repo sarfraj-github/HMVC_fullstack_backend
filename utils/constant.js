@@ -13,4 +13,7 @@ const RESPONSE_MESSAGE = {
 // Lead fields to be used in create and update operations
 const LEAD_FIELDS = ['salutation', 'first_name', 'last_name', 'phone', 'email', 'gender', 'street', 'city', 'state', 'country', 'zip_code', 'rating', 'lead_source', 'lead_status', 'account_name', 'account_phone', 'account_email', 'owner_id', 'description', 'account_id', 'reference_id', 'createdbyid', 'lastmodifiedbyid'];
 
-module.exports = { RESPONSE_MESSAGE, LEAD_FIELDS };
+// Test email constant for use in test cases
+const TEST_EMAIL = 'john.doe@example.com';
+
+module.exports = { RESPONSE_MESSAGE, LEAD_FIELDS, TEST_EMAIL };

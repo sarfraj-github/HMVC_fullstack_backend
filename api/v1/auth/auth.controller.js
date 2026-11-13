@@ -1,7 +1,7 @@
 /**
- * @file auth.contoller.js
+ * @file auth.controller.js
  * @description Handles all authentication endpoint requests.
- * @author  Modmmad Sarfraj
+ * @author  Mohmmad Sarfraj
  * @date    14-may-2025
  */
 
@@ -15,16 +15,16 @@ const { RESPONSE_MESSAGE } = require("../../../utils/constant");
 const userRegister = async (req, res) => {
     try {
 
-        const isExsitingUser = await authModel.findByEmail(req?.body?.email);
-        if (isExsitingUser) {
-            return response.duplicate(res, RESPONSE_MESSAGE.EMAIL_ALREADY_EXISTS, 400);
+        const isExistingUser = await authModel.findByEmail(req?.body?.email);
+        if (isExistingUser) {
+            return response.duplicate(res, RESPONSE_MESSAGE.EMAIL_ALREADY_EXISTS);
         }
 
         const salt = bcrypt.genSaltSync(10);
         req.body.hashPassword = bcrypt.hashSync(req.body.password, salt);
 
         const newUser = await authModel.registerNewUser(req.body);
-        // console.log('database response after rgister new user :-> ', newUser);
+        // console.log('database response after register new user :-> ', newUser);
 
         if (newUser) {
             response.created(res, RESPONSE_MESSAGE.CREATE, newUser);
@@ -67,7 +67,7 @@ const logout = async (req, res) => {
 }
 
 /**
- * @description : This Controller used for loged-in user for update password.
+ * @description : This Controller used for logged-in user for update password.
  */
 const handleUpdatePassword = async (req, res) => {
     try {
@@ -91,7 +91,7 @@ const handleUpdatePassword = async (req, res) => {
 /**
  * @Description : Verify user with User-name and Password
  */
-const handleVarifyUser = async (req) => {
+const handleVerifyUser = async (req) => {
     try {
 
     } catch (error) {
@@ -100,9 +100,9 @@ const handleVarifyUser = async (req) => {
 }
 
 /**
- * @description : This mehthod sent a reset password link to use on thier email-id
+ * @description : This method sent a reset password link to use on their email-id
  */
-const forgote_password = async (req, res) => {
+const forgot_password = async (req, res) => {
     try {
 
     } catch (error) {
@@ -115,6 +115,6 @@ module.exports = {
     loginUser,
     logout,
     handleUpdatePassword,
-    forgote_password,
-    handleVarifyUser
+    forgot_password,
+    handleVerifyUser
 }
