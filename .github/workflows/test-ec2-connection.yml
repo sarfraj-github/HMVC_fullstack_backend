@@ -15,8 +15,8 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
 
-          printf '%s\n' "${{ secrets.EC2_SSH_KEY}}" > ~/.ssh/ec2_key
-          chmod 600 ~/.ssh/ec2_key
+          printf '%s\n' "${{ secrets.EC2_SSH_KEY}}" > ~/.ssh/EC2_SSH_KEY
+          chmod 600 ~/.ssh/EC2_SSH_KEY
 
       - name: Test EC2 Connection
         run: |
