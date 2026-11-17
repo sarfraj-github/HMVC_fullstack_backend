@@ -10,21 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Validate EC2 Host
+      - name: Validate EC2 Credentials
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
         run: |
-          if [[ -z "$EC2_HOST" ]]; then
-            echo "EC2_HOST is empty"
+          if [[ -z "$EC2_HOST" || -z "$EC2_USER" ]]; then
+            echo "EC2_HOST or EC2_USER is empty"
             exit 1
           fi
 
-          if [[ "$EC2_HOST" =~ [[:space:]/@:] ]]; then
-            echo "EC2_HOST contains invalid characters"
+          if [[ ! "$EC2_HOST" =~ ^[a-zA-Z0-9.-]+$ ]]; then
+            echo "Invalid EC2_HOST format"
             exit 1
           fi
 
-          echo "EC2_HOST format looks valid"
+          if [[ ! "$EC2_USER" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+            echo "Invalid EC2_USER format"
+            exit 1
+          fi
+
+          echo "EC2_HOST validation passed"
+          echo "EC2_USER validation passed"
 
       - name: Configure SSH
         run: |
@@ -35,9 +42,12 @@ jobs:
           chmod 600 ~/.ssh/ec2_key
 
       - name: Test EC2 Connection
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
         run: |
-          ssh -o StrictHostKeyChecking=accept-new \ 
-              -o ConnectTimeout=10\
+          ssh -o StrictHostKeyChecking=accept-new \
+              -o ConnectTimeout=10 \
               -i ~/.ssh/ec2_key \
-              "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST}}" \
+              "$EC2_USER@$EC2_HOST" \
               "echo 'EC2 SSH Connection successful!'"
