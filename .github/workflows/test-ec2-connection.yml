@@ -1,7 +1,9 @@
 name: Test EC2 SSH Connection
 
 On:
-  workflow_dispatch:
+  push:
+    branches:
+      - dev_sarfaraz
 
 jobs:
   test-connection:
