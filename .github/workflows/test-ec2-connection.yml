@@ -10,6 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validate EC2 Host
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+        run: |
+          if [[ -z "$EC2_HOST" ]]; then
+            echo "EC2_HOST is empty"
+            exit 1
+          fi
+
+          if [[ "$EC2_HOST" =~ [[:space:]/@:] ]]; then
+            echo "EC2_HOST contains invalid characters"
+            exit 1
+          fi
+
+          echo "EC2_HOST format looks valid"
+
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
