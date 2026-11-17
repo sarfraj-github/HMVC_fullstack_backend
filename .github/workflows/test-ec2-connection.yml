@@ -1,3 +1,5 @@
+name: Test EC2 SSH Connection
+
 jobs:
   test-connection:
     runs-on: ubuntu-latest
