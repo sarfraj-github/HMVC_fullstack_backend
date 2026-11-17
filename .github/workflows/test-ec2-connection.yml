@@ -21,7 +21,7 @@ jobs:
       - name: Test EC2 Connection
         run: |
           ssh -o StrictHostKeyChecking=accept-new\
-              -o ConnectionTimeout=10\
+              -o ConnectTimeout=10\
               -i ~/.ssh/ec2_key \
               "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST}}" \
               "echo 'EC2 SSH Connection successful!'"
