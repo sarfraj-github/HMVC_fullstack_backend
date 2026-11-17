@@ -1,6 +1,6 @@
 name: Test EC2 SSH Connection
 
-On:
+on:
   push:
     branches:
       - dev_sarfaraz
