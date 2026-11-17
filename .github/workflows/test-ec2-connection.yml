@@ -22,6 +22,6 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=accept-new\
               -o ConnectTimeout=10\
-              -i ~/.ssh/ec2_key \
+              -i ~/.ssh/EC2_SSH_KEY \
               "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST}}" \
               "echo 'EC2 SSH Connection successful!'"
