@@ -37,19 +37,15 @@ jobs:
             --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
             --parameters '{
-                "commands":[
-                  "
-                    sudo -iu ubuntu bash -lc '\''echo \"USER=$USER\"; echo \"NODE VERSION:\"; 
-                    node -v; 
-                    echo \"NPM VERSION:\"; 
-                    npm -v; 
-                    echo \"PROJECT DIRECTORY:\"; 
-                    find /home/ubuntu -maxdepth 3 -type d -name \"HMVC-Backend-FullStack\"; 
-                    echo \"PM2 PROCESSES:\"; 
-                    pm2 list'\''
-                  "
-                ]
-              }' \
+              "commands": [
+                "sudo -iu ubuntu bash -lc '\''echo \"USER=$USER\"; \
+                echo \"NODE VERSION:\"; node -v; \
+                echo \"NPM VERSION:\"; npm -v; \
+                echo \"PROJECT DIRECTORY:\"; \
+                find /home/ubuntu -maxdepth 3 -type d -name \"HMVC-Backend-FullStack\"; \
+                echo \"PM2 PROCESSES:\"; pm2 list'\''"
+              ]
+            }' \
             --query "Command.CommandId" \
             --output text)
 
