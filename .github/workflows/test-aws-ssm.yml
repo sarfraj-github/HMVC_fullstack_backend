@@ -31,25 +31,35 @@ jobs:
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           INSTANCE_ID: i-06adc4ece8b7e71b9
+        shell: bash
         run: |
+          cat > /tmp/ssm-parameters.json <<'JSON'
+          {
+            "commands": [
+              "echo USER:",
+              "sudo -iu ubuntu whoami",
+              "echo NODE VERSION:",
+              "sudo -iu ubuntu bash -lc 'node -v'",
+              "echo NPM VERSION:",
+              "sudo -iu ubuntu bash -lc 'npm -v'",
+              "echo PROJECT DIRECTORY:",
+              "find /home/ubuntu -maxdepth 3 -type d -name HMVC-Backend-FullStack",
+              "echo PM2 PROCESSES:",
+              "sudo -iu ubuntu bash -lc 'pm2 list'"
+            ]
+          }
+          JSON
+
           COMMAND_ID=$(aws ssm send-command \
             --region "$AWS_REGION" \
             --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
-            --parameters '{
-              "commands": [
-                "sudo -iu ubuntu bash -lc '\''echo \"USER=$USER\"; \
-                echo \"NODE VERSION:\"; node -v; \
-                echo \"NPM VERSION:\"; npm -v; \
-                echo \"PROJECT DIRECTORY:\"; \
-                find /home/ubuntu -maxdepth 3 -type d -name \"HMVC-Backend-FullStack\"; \
-                echo \"PM2 PROCESSES:\"; pm2 list'\''"
-              ]
-            }' \
-            --query "Command.CommandId" \
+            --parameters file:///tmp/ssm-parameters.json \
+            --query 'Command.CommandId' \
             --output text)
 
           echo "SSM command submitted successfully"
+          echo "Command ID: $COMMAND_ID"
 
           aws ssm wait command-executed \
             --region "$AWS_REGION" \
@@ -60,5 +70,5 @@ jobs:
             --region "$AWS_REGION" \
             --command-id "$COMMAND_ID" \
             --instance-id "$INSTANCE_ID" \
-            --query '{Status:Status,Output:StandardOutputContent}' \
+            --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}' \
             --output json
