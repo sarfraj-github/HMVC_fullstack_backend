@@ -42,10 +42,10 @@ jobs:
               "sudo -iu ubuntu bash -lc 'node -v'",
               "echo NPM VERSION:",
               "sudo -iu ubuntu bash -lc 'npm -v'",
-              "echo PROJECT DIRECTORY:",
-              "find /home/ubuntu -maxdepth 3 -type d -name HMVC-Backend-FullStack",
-              "echo PM2 PROCESSES:",
-              "sudo -iu ubuntu bash -lc 'pm2 list'"
+              "echo PM2 PROCESS DETAILS:",
+              "sudo -iu ubuntu bash -lc 'pm2 describe my-hmvc-backend'",
+              "echo GIT PROJECT DIRECTORIES:",
+              "find /home/ubuntu -maxdepth 4 -type d -name .git"
             ]
           }
           JSON
