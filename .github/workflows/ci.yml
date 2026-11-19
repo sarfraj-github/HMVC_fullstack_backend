@@ -28,14 +28,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Step 4: Validate backend JavaScript syntax
+      # Step 4: Run Jest tests
+      - name: Run backend tests
+        run: npm test -- --runInBand
+
+      # Step 5: Validate backend JavaScript syntax
       - name: Check JavaScript syntax
         run: node --check start.js
 
-      # Step 5. Verify Node.js Application
+      # Step 6. Verify Node.js Application
       - name: Check Node.js version
         run: node -v
 
-      # Step 6. Verify npm version
+      # Step 7. Verify npm version
       - name: Check npm version
         run: npm -v
